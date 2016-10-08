@@ -43,13 +43,12 @@ export class IntroPage implements OnInit {
           
         }
       }
-      // console.log(this.counterInfo);
+      console.log(this.counterInfo);
     });
 
     //gets list of champions that complement champ with names and percentages
     this.http.get("/championSynergyInfo.json").subscribe(data => {
       let arr = JSON.parse(data.text());
-      console.log(arr);
       for (let i = 0; i < arr.length; i++){
         this.synergyInfo[i] = {
           name: arr[i].mainChampion,
