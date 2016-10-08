@@ -17,6 +17,7 @@ export class IntroPage implements OnInit {
   public namedStats: any[];
   public champions: any = {};
   public counterInfo: any = {};
+  public synergyInfo: any ={};
   constructor(public nav: NavController, public http: Http) {
 
   }
@@ -42,11 +43,30 @@ export class IntroPage implements OnInit {
           
         }
       }
-      console.log(this.counterInfo);
+      // console.log(this.counterInfo);
     });
 
     //gets list of champions that complement champ with names and percentages
-    
+    this.http.get("/championSynergyInfo.json").subscribe(data => {
+      let arr = JSON.parse(data.text());
+      console.log(arr);
+      for (let i = 0; i < arr.length; i++){
+        this.synergyInfo[i] = {
+          name: arr[i].mainChampion,
+          complements: {}
+        }
+
+        for (let j = 1; j < arr[i].counterChampions.length; j++){
+          this.synergyInfo[i].complements[j-1] = {
+            complement: arr[i].counterChampions[j],
+            percent: arr[i].percent[j-1]
+          }
+            
+          
+        }
+      }
+      console.log(this.synergyInfo);
+    });
 
 
 
@@ -80,27 +100,6 @@ export class IntroPage implements OnInit {
       console.log(this.stats);
       this.nav.push(NemesisPage, { 'userInfo': this.stats })
     });
-
-
-
-    // var xmlhttp = new XMLHttpRequest();
-    // var url = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + this.summoner.name + "?api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
-
-    // xmlhttp.onreadystatechange = function () {
-    //   if (this.readyState == 4 && this.status == 200) {
-    //     let splitVal = this.responseText.search(":");
-    //     var myArr = JSON.parse(this.responseText.slice(splitVal + 1, -1));
-    //     // console.log(myArr.id);
-    //     localStorage.setItem('id', (myArr.id).toString());
-    //     // console.log(localStorage.getItem('id'));
-
-    //   }
-    // };
-    // xmlhttp.open("GET", url, true);
-    // xmlhttp.send();
-
-
-    // this.nav.push(NemesisPage);
 
   };
 
