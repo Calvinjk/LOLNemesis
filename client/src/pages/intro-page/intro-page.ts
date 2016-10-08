@@ -20,6 +20,7 @@ export class IntroPage implements OnInit {
   public synergyInfo: any ={};
   public counterArr: any[];
   public synergyArr: any[];
+  public params: any[];
   constructor(public nav: NavController, public http: Http) {
 
   }
@@ -98,12 +99,15 @@ export class IntroPage implements OnInit {
         }
       }
       console.log(this.stats);
-      this.nav.push(NemesisPage, { 'userInfo': this.stats })
+      this.params = [
+        this.stats,
+        this.counterInfo,
+        this.synergyInfo
+      ]
+      this.nav.push(NemesisPage, { 'userInfo': this.params })
     });
 
   };
 
 
-
 }
-
