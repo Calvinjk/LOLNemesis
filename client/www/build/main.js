@@ -75971,41 +75971,100 @@ setTimeout(function () {
     }
 }, DEVICE_READY_TIMEOUT);
 
-/* ion-compiler */
-var __decorate$108 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+var __extends$141 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var NemesisPage = (function () {
-    function NemesisPage(nav) {
-        this.nav = nav;
-        var xmlhttp1 = new XMLHttpRequest();
-        var url1 = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?dataById=true&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
-        xmlhttp1.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var myArr = JSON.parse(this.responseText);
-                console.log(myArr);
-            }
-        };
-        xmlhttp1.open("GET", url1, true);
-        xmlhttp1.send();
+var Subscriber_1$4 = Subscriber_1$2;
+/**
+ * Applies a given `project` function to each value emitted by the source
+ * Observable, and emits the resulting values as an Observable.
+ *
+ * <span class="informal">Like [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map),
+ * it passes each source value through a transformation function to get
+ * corresponding output values.</span>
+ *
+ * <img src="./img/map.png" width="100%">
+ *
+ * Similar to the well known `Array.prototype.map` function, this operator
+ * applies a projection to each value and emits that projection in the output
+ * Observable.
+ *
+ * @example <caption>Map every every click to the clientX position of that click</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var positions = clicks.map(ev => ev.clientX);
+ * positions.subscribe(x => console.log(x));
+ *
+ * @see {@link mapTo}
+ * @see {@link pluck}
+ *
+ * @param {function(value: T, index: number): R} project The function to apply
+ * to each `value` emitted by the source Observable. The `index` parameter is
+ * the number `i` for the i-th emission that has happened since the
+ * subscription, starting from the number `0`.
+ * @param {any} [thisArg] An optional argument to define what `this` is in the
+ * `project` function.
+ * @return {Observable<R>} An Observable that emits the values from the source
+ * Observable transformed by the given `project` function.
+ * @method map
+ * @owner Observable
+ */
+function map$2(project, thisArg) {
+    if (typeof project !== 'function') {
+        throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
     }
-    NemesisPage.prototype.pushNemesisPage = function (name) {
+    return this.lift(new MapOperator(project, thisArg));
+}
+var map_2 = map$2;
+var MapOperator = (function () {
+    function MapOperator(project, thisArg) {
+        this.project = project;
+        this.thisArg = thisArg;
+    }
+    MapOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new MapSubscriber(subscriber, this.project, this.thisArg));
     };
-    
-    NemesisPage = __decorate$108([
-        Component({ template: /* ion-inline-template */ '<ion-header>\n\n  <ion-navbar>\n\n      <ion-title>Nemesis Draft</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <button ion-button color="primary" (click)="pushNemesisPage(summoner.name)">Nemesis Draft</button>\n\n</ion-content>\n\n'
-        }), 
-        __metadata$3('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
-    ], NemesisPage);
-    return NemesisPage;
-    var _a;
+    return MapOperator;
 }());
+var MapOperator_1 = MapOperator;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var MapSubscriber = (function (_super) {
+    __extends$141(MapSubscriber, _super);
+    function MapSubscriber(destination, project, thisArg) {
+        _super.call(this, destination);
+        this.project = project;
+        this.count = 0;
+        this.thisArg = thisArg || this;
+    }
+    // NOTE: This looks unoptimized, but it's actually purposefully NOT
+    // using try/catch optimizations.
+    MapSubscriber.prototype._next = function (value) {
+        var result;
+        try {
+            result = this.project.call(this.thisArg, value, this.count++);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.destination.next(result);
+    };
+    return MapSubscriber;
+}(Subscriber_1$4.Subscriber));
+
+var map_1$1 = {
+	map: map_2,
+	MapOperator: MapOperator_1
+};
+
+var Observable_1$4 = Observable_1$1;
+var map_1 = map_1$1;
+Observable_1$4.Observable.prototype.map = map_1.map;
 
 /* ion-compiler */
 var __decorate$107 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -76018,49 +76077,41 @@ var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var IntroPage = (function () {
-    function IntroPage(nav) {
+    function IntroPage(nav, http) {
         this.nav = nav;
+        this.http = http;
         this.summoner = {
             name: ""
         };
     }
     IntroPage.prototype.pushNemesisPage = function (name) {
-        var _this = this;
-        var xmlhttp = new XMLHttpRequest();
-        var url = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + this.summoner.name + "?api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var splitVal = this.responseText.search(":");
-                var myArr = JSON.parse(this.responseText.slice(splitVal + 1, -1));
-                console.log(myArr.id);
-                // this.summoner.id = myArr.id;
-                var xmlhttp1 = new XMLHttpRequest();
-                var url1 = "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + myArr.id + "/ranked?season=SEASON2016&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
-                xmlhttp1.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var myArr = JSON.parse(this.responseText);
-                        console.log(myArr);
-                        this.userArr = myArr;
-                    }
-                };
-                xmlhttp1.open("GET", url1, true);
-                xmlhttp1.send();
-            }
-        };
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-        setTimeout(function () {
-            _this.nav.push(NemesisPage, _this.userArr);
-        }, 500);
+        this.http.get("https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + name + "?api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722").subscribe(function (data) {
+            // this.userArr = data;
+            console.log(data);
+        });
+        // var xmlhttp = new XMLHttpRequest();
+        // var url = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/" + this.summoner.name + "?api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
+        // xmlhttp.onreadystatechange = function () {
+        //   if (this.readyState == 4 && this.status == 200) {
+        //     let splitVal = this.responseText.search(":");
+        //     var myArr = JSON.parse(this.responseText.slice(splitVal + 1, -1));
+        //     // console.log(myArr.id);
+        //     localStorage.setItem('id', (myArr.id).toString());
+        //     // console.log(localStorage.getItem('id'));
+        //   }
+        // };
+        // xmlhttp.open("GET", url, true);
+        // xmlhttp.send();
+        // this.nav.push(NemesisPage);
     };
     
     IntroPage = __decorate$107([
-        Component({ template: /* ion-inline-template */ '<ion-header>\n  <ion-navbar>\n      <ion-title>LOL Nemesis</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <h3>Enter Your Summoner Name</h3>\n\n  <ion-item>\n    <ion-label floating>Summoner Name</ion-label>\n    <ion-input type="text" [(ngModel)]="summoner.name"></ion-input>\n  </ion-item>\n\n\n  <button ion-button color="primary" (click)="pushNemesisPage(summoner.name)">Nemesis Draft</button>\n\n\n</ion-content>\n'
+        Component({ template: /* ion-inline-template */ '<ion-header>\n  <ion-navbar>\n      <ion-title>LOL Nemesis</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n\n  <h3>Enter Your Summoner Name</h3>\n\n  <ion-item>\n    <ion-label floating>Summoner Name</ion-label>\n    <ion-input type="text" [(ngModel)]="summoner.name"></ion-input>\n  </ion-item>\n\n\n  <button ion-button color="primary" (click)="pushNemesisPage(summoner.name)">Nemesis Draft</button>\n\n</ion-content>\n'
         }), 
-        __metadata$2('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
+        __metadata$2('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object, (typeof (_b = typeof Http !== 'undefined' && Http) === 'function' && _b) || Object])
     ], IntroPage);
     return IntroPage;
-    var _a;
+    var _a, _b;
 }());
 
 /* ion-compiler */
@@ -76108,6 +76159,67 @@ var MyApp = (function () {
         __metadata$1('design:paramtypes', [(typeof (_b = typeof Platform !== 'undefined' && Platform) === 'function' && _b) || Object])
     ], MyApp);
     return MyApp;
+    var _a, _b;
+}());
+
+/* ion-compiler */
+var __decorate$109 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var NemesisPage = (function () {
+    function NemesisPage(nav, params) {
+        this.nav = nav;
+        this.params = params;
+    }
+    NemesisPage.prototype.ngOnInit = function () {
+        this.getStats();
+        console.log('statsssss', this.getStats());
+        this.champions = this.getChampions();
+    };
+    NemesisPage.prototype.getStats = function () {
+        var xmlhttp1 = new XMLHttpRequest();
+        var url1 = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?dataById=true&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
+        var myArr;
+        return localStorage.getItem('id').then(function () {
+            xmlhttp1.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    return JSON.parse(this.responseText);
+                }
+            };
+        });
+        // xmlhttp1.open("GET", url1, true);
+        // xmlhttp1.send();
+    };
+    NemesisPage.prototype.getChampions = function () {
+        console.log(localStorage.getItem('id'));
+        var xmlhttp = new XMLHttpRequest();
+        var url = "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + localStorage.getItem('id') + "/ranked?season=SEASON2016&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722";
+        var myArr1;
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                myArr1 = JSON.parse(this.responseText);
+                this.champions = myArr1;
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    };
+    NemesisPage.prototype.pushNemesisPage = function () {
+        console.log(this.stats);
+    };
+    
+    NemesisPage = __decorate$109([
+        Component({ template: /* ion-inline-template */ '<ion-header>\n\n  <ion-navbar>\n\n      <ion-title>Nemesis Draft</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <button ion-button color="primary" (click)="pushNemesisPage()">Nemesis Draft</button>\n\n</ion-content>\n\n'
+        }), 
+        __metadata$4('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object, (typeof (_b = typeof NavParams !== 'undefined' && NavParams) === 'function' && _b) || Object])
+    ], NemesisPage);
+    return NemesisPage;
     var _a, _b;
 }());
 
