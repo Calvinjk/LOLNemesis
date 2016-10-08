@@ -15,5 +15,6 @@ export class IntroPage {
   pushNemesisPage(name){
     console.log("Name: ", this.summoner.name);
     console.log("Champions: ", this.summoner.champions);
+    
   }
 }
