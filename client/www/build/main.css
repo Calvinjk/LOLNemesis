@@ -21083,9 +21083,3 @@ sub {
     padding-top: calc(16px + 20px);
   }
 }
-
-.hello-ionic-page p {
-  margin: 20px 0;
-  line-height: 22px;
-  font-size: 16px;
-}
