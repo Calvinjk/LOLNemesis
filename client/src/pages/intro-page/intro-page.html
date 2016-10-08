@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+      <ion-title>LOL Nemesis</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <h3>Enter Your Summoner Name</h3>
+
+  <ion-item>
+    <ion-label floating>Summoner Name</ion-label>
+    <ion-input type="text" [(ngModel)]="summoner.name"></ion-input>
+  </ion-item>
+
+
+  <button ion-button color="primary" (click)="pushNemesisPage(summoner.name)">Nemesis Draft</button>
+  
+
+</ion-content>
