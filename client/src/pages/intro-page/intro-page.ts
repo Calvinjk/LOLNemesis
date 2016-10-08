@@ -18,6 +18,8 @@ export class IntroPage implements OnInit {
   public champions: any = {};
   public counterInfo: any = {};
   public synergyInfo: any ={};
+  public counterArr: any[];
+  public synergyArr: any[];
   constructor(public nav: NavController, public http: Http) {
 
   }
@@ -64,7 +66,6 @@ export class IntroPage implements OnInit {
           
         }
       }
-      console.log(this.synergyInfo);
     });
 
 
