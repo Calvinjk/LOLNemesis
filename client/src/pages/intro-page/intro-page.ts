@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { NemesisPage } from '../nemesis/nemesis';
 import { Http } from '@angular/http';
@@ -7,16 +7,49 @@ import 'rxjs/add/operator/map';
 @Component({
   templateUrl: 'intro-page.html'
 })
-export class IntroPage {
+export class IntroPage implements OnInit {
   public summoner = {
     name: ""
   }
   public userArr: any[] = [];
   public id: any;
-  public stats: any[] = [];
+  public stats: any = {};
   public namedStats: any[];
-  public champions: any[];
+  public champions: any = {};
+  public counterInfo: any = {};
   constructor(public nav: NavController, public http: Http) {
+
+  }
+
+
+  ngOnInit() {
+
+    //gets list of counters with names and percentages
+    this.http.get("/championCounterInfo.json").subscribe(data => {
+      let arr = JSON.parse(data.text());
+      for (let i = 0; i < arr.length; i++){
+        this.counterInfo[i] = {
+          name: arr[i].mainChampion,
+          counters: {}
+        }
+
+        for (let j = 1; j < arr[i].counterChampions.length; j++){
+          this.counterInfo[i].counters[j-1] = {
+            counter: arr[i].counterChampions[j],
+            percent: arr[i].percent[j-1]
+          }
+            
+          
+        }
+      }
+      console.log(this.counterInfo);
+    });
+
+    //gets list of champions that complement champ with names and percentages
+    
+
+
+
   }
 
   pushNemesisPage(name) {
