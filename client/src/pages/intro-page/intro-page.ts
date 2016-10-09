@@ -82,6 +82,7 @@ export class IntroPage implements OnInit {
     });
 
     this.http.get("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?dataById=true&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722").map(res => res.json()).subscribe(data => {
+      console.log(data);
       let arr = data.data;
       this.champions = Object.keys(arr).map(function(key) {return arr[key];});
     });

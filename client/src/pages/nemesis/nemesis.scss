@@ -1,4 +1,121 @@
-button[fab].fab-upper-left {
-    top: calc(100% - 35px);
-    z-index: 50;
-}
+.nemesis{
+    background-image: url("/images.jpg");
+    background-size: cover;
+
+    .left1{
+        position:absolute;
+        border-radius: 50%;
+        top: 0px;
+        left:0px;
+        width: 80px;
+        height: 115px;
+        z-index: 3;
+
+    }
+
+    .left2{
+        position:absolute;
+        border-radius: 50%;
+        top: 57px;
+        left: 0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+    
+    .left3{
+        position:absolute;
+        border-radius: 50%;
+        top: 114px;
+        left: 0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+
+    .left4{
+        position:absolute;
+        border-radius: 50%;
+        top: 171px;
+        left: 0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+
+    .left5{
+        position:absolute;
+        border-radius: 50%;
+        top: 228px;
+        left:0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+
+    .mid{
+        position:absolute;
+        border-radius: 50%;
+        top: 100px;
+        width: 120px;
+        height: 150px;
+        left: 60px;
+
+    }
+
+    .right1{
+        position:absolute;
+        border-radius: 50%;
+        top: 0px;
+        right:0px;
+        width: 80px;
+        height: 115px;
+        z-index: 3;
+
+    }
+
+    .right2{
+        position:absolute;
+        border-radius: 50%;
+        top: 57px;
+        right: 0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+    
+    .right3{
+        position:absolute;
+        border-radius: 50%;
+        top: 114px;
+        right: 0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+
+    .right4{
+        position:absolute;
+        border-radius: 50%;
+        top: 171px;
+        right: 0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+
+    .right5{
+        position:absolute;
+        border-radius: 50%;
+        top: 228px;
+        right:0px;
+        width: 80px;
+        height: 115px;
+        z-index: 4;
+    }
+
+
+    }
+        
+
+
