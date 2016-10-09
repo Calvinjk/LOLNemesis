@@ -30,13 +30,18 @@ export class ChampionPicksPage implements OnInit {
             });
             console.log(arr);
             this.champions = arr;
+            if (this.id == 0) {
+            this.viewCtrl.dismiss(this.champions);
+        }
         });
+        
     }
     dismiss() {
         console.log(this.champions);
         this.viewCtrl.dismiss();
     }
     insertChampion(champion) {
+
         champion.id = this.id;
         this.viewCtrl.dismiss(champion);
     }

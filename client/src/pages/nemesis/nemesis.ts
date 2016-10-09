@@ -117,11 +117,19 @@ export class NemesisPage implements OnInit {
     goToModal1() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 1});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
+                console.log("DATA", data);
             this.champion1 = data;
             this.teamComp[5] = {
                 name: this.champion1.championName,
                 status: "Synergy"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
 
@@ -130,22 +138,38 @@ export class NemesisPage implements OnInit {
     goToModal2() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 2});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
+                console.log("DATA", data);
             this.champion2 = data;
             this.teamComp[6] = {
                 name: this.champion2.championName,
                 status: "Synergy"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
     }
     goToModal3() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 3});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
+                console.log("DATA", data);
             this.champion3 = data;
             this.teamComp[7] = {
                 name: this.champion3.championName,
                 status: "Synergy"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
 
@@ -154,11 +178,19 @@ export class NemesisPage implements OnInit {
     goToModal4() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 4});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
+                console.log("DATA", data);
             this.champion4 = data;
             this.teamComp[8] = {
                 name: this.champion4.championName,
                 status: "Synergy"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
     }
@@ -167,6 +199,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 6});
         championModal.onDidDismiss(data => {
             setTimeout(() => {
+                console.log("DATA", data);
             this.champion6 = data;
             this.teamComp[0] = {
                 name: this.champion6.championName,
@@ -176,20 +209,27 @@ export class NemesisPage implements OnInit {
             console.log("return", this.createSuggestionArray(this.teamComp));
             var arr = this.createSuggestionArray(this.teamComp);
             console.log("arr", arr[0]);
-            this.champion0.championName = name;
-            console.log(this.champion0.championName);
-            },2000);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
     }
     goToModal7() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 7});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
+                console.log("DATA", data);
             this.champion7 = data;
             this.teamComp[1] = {
                 name: this.champion7.championName,
                 status: "Counter"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
 
@@ -198,11 +238,19 @@ export class NemesisPage implements OnInit {
     goToModal8() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 8});
         championModal.onDidDismiss(data => {
-            this.champion8 = data;;
+            setTimeout(() => {
+                console.log("DATA", data);
+            this.champion8 = data;
             this.teamComp[2] = {
                 name: this.champion8.championName,
                 status: "Counter"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
     }
@@ -211,12 +259,18 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 9});
         championModal.onDidDismiss(data => {
             setTimeout(() => {
+                console.log("DATA", data);
             this.champion9 = data;
             this.teamComp[3] = {
                 name: this.champion9.championName,
                 status: "Counter"
             };
-            }, 2000);
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = arr[0].name;
+            },300);
         });
         championModal.present();
     }
@@ -233,13 +287,13 @@ export class NemesisPage implements OnInit {
             console.log("teamcomp", this.teamComp);
             console.log("return", this.createSuggestionArray(this.teamComp));
             var arr = this.createSuggestionArray(this.teamComp);
-            console.log("arr", arr[0]);
+            var name = arr[0].name;
             this.champion0.championName = name;
             console.log(this.champion0.championName);
-            // var index = this.championImages[3];
+            // var index = this.championImages[3]
             // console.log("Index", index);
-            // this.champion0.imageUrl = this.championImages[3]
-        }, 2000);
+            console.log(this.championImages.find(name));
+        }, 1000);
         });
         championModal.present();
 
@@ -248,7 +302,11 @@ export class NemesisPage implements OnInit {
     goToModalMid() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 0});
         championModal.onDidDismiss(data => {
-            this.champion0 = data;
+            for (var i = 0; i < data.length; i++){
+                if (this.champion0.championName == data[i].championName){
+                    this.champion0.imageUrl = data[i].imageUrl;
+                }
+            }
         });
         championModal.present();
     }
