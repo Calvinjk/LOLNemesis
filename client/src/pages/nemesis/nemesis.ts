@@ -89,9 +89,17 @@ export class NemesisPage implements OnInit {
 
         var teamComps = [
             {name: "Zed", status: "Counter"},
+            {name: "Cho'Gath", status: "Counter"},
+            {name: "Vayne", status: "Counter"},
+            {name: "Janna", status: "Counter"},
+            {name: "Sejuani", status: "Counter"},
+            {name: "Kalista", status: "Synergy"},
+            {name: "Yasuo", status: "Synergy"},
+            {name: "Alistar", status: "Synergy"},
+            {name: "Malphite", status: "Synergy"},
             {name: "Alistar", status: "Synergy"}
         ]
-        console.log(this.createSuggestionArray(teamComps));
+        console.log("SUGGESTION:", this.createSuggestionArray(teamComps));
     }
 
     goToModal1() {
@@ -217,7 +225,7 @@ export class NemesisPage implements OnInit {
                 } else if (a2Type == "Option"){
                     Champion = {
                         name: a2[champion].name,
-                        score: parseInt(a2[champion].percent)
+                        score: parseInt(a2[champion].score)
                     }
                 } else {
                     console.log("Invalid type for combineArrays(a2Type).  Allowed values are Counter, Synergy, or Option.");
@@ -240,7 +248,7 @@ export class NemesisPage implements OnInit {
                 } else if (a1Type == "Option"){
                     for (var master in a1){
                         if (a1[master].name == combinedArray[champion].name){ // If we find a match, update the info and add the the array
-                            combinedArray[champion].score += parseInt(a1[master].percent);
+                            combinedArray[champion].score += a1[master].score;
                         }
                     }
                 } else {
@@ -287,7 +295,7 @@ export class NemesisPage implements OnInit {
                     if (needToAdd){
                         ChampionToAdd = {
                         name: a1[champion].name,
-                        score: parseInt(a1[champion].percent)
+                        score: parseInt(a1[champion].score)
                         }
                         combinedArray.push(ChampionToAdd);
                     }
@@ -351,8 +359,32 @@ export class NemesisPage implements OnInit {
         // Create the master suggestionArray
         var suggestionsArray = this.combineArrays(optionsArray, "Option", this.userInfo, "Info", "Intersect");
         
-        //Sort
-        
+        // Delete champions already in game
+        for (var idex = 0; idex < suggestionsArray.length; ++idex){
+            for (var jdex in champions){
+                if (suggestionsArray[idex].name == champions[jdex].name){
+                    suggestionsArray.splice(idex--, 1);
+                }
+            }
+        }
+
+        // Personalized information
+        for (var champion in suggestionsArray){
+            var winrate = suggestionsArray[champion].stats.totalSessionsWon / suggestionsArray[champion].stats.totalSessionsPlayed;
+            suggestionsArray[champion].score *= winrate;
+        }
+
+        // Sort
+        suggestionsArray.sort(function compareScores(a, b){
+            if (a.score > b.score){
+                return -1;
+            }
+            if (a.score < b.score){
+                return 1;
+            }
+            return 0;
+        })
+
         return suggestionsArray;
     }
 }
