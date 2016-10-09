@@ -86,13 +86,13 @@ export class IntroPage implements OnInit {
     this.http.get("https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?dataById=true&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722").map(res => res.json()).subscribe(data => {
       let arr = data.data;
       this.champions = Object.keys(arr).map(function(key) {return arr[key];});
-      console.log(this.champions);
+      //console.log(this.champions);
     });
 
     this.http.get("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + localStorage.getItem('id') + "/ranked?season=SEASON2016&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722").map(res => res.json()).subscribe(data => {
       this.stats = data;
       setTimeout(() => {
-        console.log("LOGIN PAGE INFO", this.stats, this.champions);
+        //console.log("LOGIN PAGE INFO", this.stats, this.champions);
       
       
       for (var i=0; i < this.stats.champions.length; i++){
@@ -104,7 +104,7 @@ export class IntroPage implements OnInit {
         }
       }
 
-      console.log("Stats: ", this.stats);
+      //console.log("Stats: ", this.stats);
       
 
       
