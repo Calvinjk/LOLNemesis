@@ -414,22 +414,24 @@ export class NemesisPage implements OnInit {
 
         // Create the master optionsArray 
         var optionsArray = arrays[0];
-        for (var i = 1; i < arrays.length; ++i){
-            if (i == 1){
-                if (champions[0].status == "Counter" && champions[1].status == "Counter"){
-                    optionsArray = this.combineArrays(arrays[0].counters, champions[0].status, arrays[i].counters, champions[i].status, "Union");
-                } else if (champions[0].status == "Counter" && champions[i].status == "Synergy"){
-                    optionsArray = this.combineArrays(arrays[0].counters, champions[0].status, arrays[i].complements, champions[i].status, "Union");
-                } else if (champions[0].status == "Synergy" && champions[i].status == "Counter"){
-                    optionsArray = this.combineArrays(arrays[0].complemments, champions[0].status, arrays[i].counters, champions[i].status, "Union");
-                } else if (champions[0].status == "Synergy" && champions[i].status == "Synergy"){
-                    optionsArray = this.combineArrays(arrays[0].complements, champions[0].status, arrays[i].complements, champions[i].status, "Union");
-                }
-            } else {
-                if (champions[i].status == "Counter"){
-                    optionsArray = this.combineArrays(arrays[i].counters, champions[i].status, optionsArray, "Option", "Union");
-                } else if (champions[i].status == "Synergy"){
-                    optionsArray = this.combineArrays(arrays[i].complements, champions[i].status, optionsArray, "Option", "Union");
+        if (arrays.length > 1){
+            for (var i = 1; i < arrays.length; ++i){
+                if (i == 1){
+                    if (champions[0].status == "Counter" && champions[1].status == "Counter"){
+                        optionsArray = this.combineArrays(arrays[0].counters, champions[0].status, arrays[i].counters, champions[i].status, "Union");
+                    } else if (champions[0].status == "Counter" && champions[i].status == "Synergy"){
+                        optionsArray = this.combineArrays(arrays[0].counters, champions[0].status, arrays[i].complements, champions[i].status, "Union");
+                    } else if (champions[0].status == "Synergy" && champions[i].status == "Counter"){
+                        optionsArray = this.combineArrays(arrays[0].complemments, champions[0].status, arrays[i].counters, champions[i].status, "Union");
+                    } else if (champions[0].status == "Synergy" && champions[i].status == "Synergy"){
+                        optionsArray = this.combineArrays(arrays[0].complements, champions[0].status, arrays[i].complements, champions[i].status, "Union");
+                    }
+                } else {
+                    if (champions[i].status == "Counter"){
+                        optionsArray = this.combineArrays(arrays[i].counters, champions[i].status, optionsArray, "Option", "Union");
+                    } else if (champions[i].status == "Synergy"){
+                        optionsArray = this.combineArrays(arrays[i].complements, champions[i].status, optionsArray, "Option", "Union");
+                    }
                 }
             }
         }
