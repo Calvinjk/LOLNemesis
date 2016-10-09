@@ -384,6 +384,7 @@ export class NemesisPage implements OnInit {
             suggestionsArray[champion].score *= winrate;
         }
 
+
         // Sort
         suggestionsArray.sort(function compareScores(a, b){
             if (a.score > b.score){
