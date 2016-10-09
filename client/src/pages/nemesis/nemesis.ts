@@ -88,17 +88,18 @@ export class NemesisPage implements OnInit {
         this.synergyInfo = this.stats[2];
 
         //Dynamically get opposing champions
-        let opposingChamp1 = "Rammus";
+        let enemy1 = {name: "Zed", status: "Counter"};
+        let ally1 = {name:"Alistar", status: "Synergy"};
         
-        var zedCounters = this.getChampionArray("Zed", this.counterInfo, "Counter");
-        var alistarSynergies = this.getChampionArray("Alistar", this.synergyInfo, "Synergy");
-        console.log("counter", zedCounters.counters, "synergy", alistarSynergies.complements);
-        console.log("userInfo", this.userInfo);
+        var counters = this.getChampionArray(enemy1.name, this.counterInfo, enemy1.status);
+        var synergies = this.getChampionArray(ally1.name, this.synergyInfo, ally1.status);
+        //console.log("counter", counters.counters, "synergy", synergies.complements);
+        //console.log("userInfo", this.userInfo);
 
-        var optionsArray = this.combineArrays(zedCounters.counters, alistarSynergies.complements, "Union");
-        console.log("optionsArray", optionsArray);
+        var optionsArray = this.combineArrays(counters.counters, "Counter", synergies.complements, "Synergy", "Union");
+        //console.log("optionsArray", optionsArray);
 
-        var suggestionsArray = this.combineArrays(optionsArray, this.userInfo, "Intersect");
+        var suggestionsArray = this.combineArrays(optionsArray, "Option", this.userInfo, "Info", "Intersect");
         console.log("suggestionsArray", suggestionsArray);
     }
 
@@ -202,41 +203,105 @@ export class NemesisPage implements OnInit {
     }
 
     // NECESSARY TO USE THIS FUNCTION:
-    // if combineMethod == "Union", a1 = counterArray, a2 = synergyArray
-    // if combineMethod == "Intersect", a1 = optionsArray, a2 = infoArray
-    combineArrays(a1, a2, combineMethod){
+    // if combineMethod == "Union", types are necessary
+    // if combineMethod == "Intersect", a1 = optionsArray, a2 = infoArray, types are unnecessary
+    // Allowed values for types: Counter, Synergy, Option
+    combineArrays(a1, a1Type, a2, a2Type, combineMethod){
         let combinedArray = [];
         if (combineMethod == "Union"){
             var added = [];
             for (var champion in a2){   // synergyArray
                 //First make a champ with the complement's data and throw it in combinedArray
-                var Champion = {
-                    name: a2[champion].complement,
-                    score: parseInt(a2[champion].percent)
+                var Champion;
+                if (a2Type == "Counter"){
+                    Champion = {
+                        name: a2[champion].counter,
+                        score: parseInt(a2[champion].percent)
+                    }
+                } else if (a2Type == "Synergy"){
+                    Champion = {
+                        name: a2[champion].complement,
+                        score: parseInt(a2[champion].percent)
+                    }
+                } else if (a2Type == "Option"){
+                    Champion = {
+                        name: a2[champion].name,
+                        score: parseInt(a2[champion].percent)
+                    }
+                } else {
+                    console.log("Invalid type for combineArrays(a2Type).  Allowed values are Counter, Synergy, or Option.");
                 }
                 combinedArray.push(Champion);
 
-                for (var master in a1){
-                    if (a1[master].counter == combinedArray[champion].name){ // If we find a match, update the info and add the the array
-                        combinedArray[champion].score += parseInt(a1[master].percent);
+                //Check for duplicates
+                if (a1Type == "Counter"){
+                    for (var master in a1){
+                        if (a1[master].counter == combinedArray[champion].name){ // If we find a match, update the info and add the the array
+                            combinedArray[champion].score += parseInt(a1[master].percent);
+                        }
                     }
+                } else if (a1Type == "Synergy"){
+                    for (var master in a1){
+                        if (a1[master].complement == combinedArray[champion].name){ // If we find a match, update the info and add the the array
+                            combinedArray[champion].score += parseInt(a1[master].percent);
+                        }
+                    }
+                } else if (a1Type == "Option"){
+                    for (var master in a1){
+                        if (a1[master].name == combinedArray[champion].name){ // If we find a match, update the info and add the the array
+                            combinedArray[champion].score += parseInt(a1[master].percent);
+                        }
+                    }
+                } else {
+                    console.log("Invalid type for combineArrays(a1Type).  Allowed values are Counter, Synergy, or Option.");
                 }
             }
 
             // Put in remaining data from a1
             for (var champion in a1){
                 var needToAdd = true;
-                for (var master in combinedArray){
-                    if (combinedArray[master].name == a1[champion].counter){
-                        needToAdd = false;
+                var ChampionToAdd;
+                if (a1Type == "Counter"){
+                    for (var master in combinedArray){
+                        if (combinedArray[master].name == a1[champion].counter){
+                            needToAdd = false;
+                        }
                     }
-                }
-                if (needToAdd){
-                    var Champion = {
-                    name: a1[champion].counter,
-                    score: parseInt(a1[champion].percent)
-                }
-                combinedArray.push(Champion);
+                    if (needToAdd){
+                        ChampionToAdd = {
+                        name: a1[champion].counter,
+                        score: parseInt(a1[champion].percent)
+                        }
+                        combinedArray.push(ChampionToAdd);
+                    }
+                } else if (a1Type == "Synergy"){
+                    for (var master in combinedArray){
+                        if (combinedArray[master].name == a1[champion].complement){
+                            needToAdd = false;
+                        }
+                    }
+                    if (needToAdd){
+                        ChampionToAdd = {
+                        name: a1[champion].complement,
+                        score: parseInt(a1[champion].percent)
+                        }
+                        combinedArray.push(ChampionToAdd);
+                    }
+                } else if (a1Type == "Option"){
+                    for (var master in combinedArray){
+                        if (combinedArray[master].name == a1[champion].name){
+                            needToAdd = false;
+                        }
+                    }
+                    if (needToAdd){
+                        ChampionToAdd = {
+                        name: a1[champion].name,
+                        score: parseInt(a1[champion].percent)
+                        }
+                        combinedArray.push(ChampionToAdd);
+                    }
+                } else {
+                    console.log("Invalid type for combineArrays(a1Type).  Allowed values are Counter, Synergy, or Option.");
                 }
                 needToAdd = true;
             }
@@ -258,6 +323,8 @@ export class NemesisPage implements OnInit {
         }
     }
 
+    createSuggestionArray(champions){
 
+    }
 }
 
