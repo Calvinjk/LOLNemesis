@@ -13,14 +13,11 @@ export class ChampionPicksPage implements OnInit {
     public http: Http) {
   }
   ngOnInit() {
-    var arr = this.params.get('id');
-    arr = arr[3];
-    var ar = [];
-    for (var item in arr){
-        ar.push(arr[item])
-    }
-    this.champions = ar;    
-        // this.champions = arr[3];
+    // var arr = this.params.get('id');
+    this.http.get("/championImages.json").subscribe(data => {
+      let arr = JSON.parse(data.text());
+      console.log("here", arr);
+    });
   }
   dismiss() {
       console.log(this.champions);
