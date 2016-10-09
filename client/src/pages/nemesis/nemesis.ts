@@ -13,7 +13,7 @@ export class NemesisPage implements OnInit {
     public counterInfo: any;
     public synergyInfo: any;
     public champions: any[];
-    public teamComp: [
+    public teamComp = [
             {name: "", status: "Counter"},
             {name: "", status: "Counter"},
             {name: "", status: "Counter"},
@@ -215,17 +215,22 @@ export class NemesisPage implements OnInit {
     goToModal10() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 10});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
             this.champion10 = data;
             this.teamComp[4] = {
                 name: this.champion10.championName,
                 status: "Counter"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
             var arr = this.createSuggestionArray(this.teamComp);
-            var name = arr[0].name;
+            console.log("arr", arr[0]);
             this.champion0.championName = name;
-            var index = this.championImages[3].indexOf(name);
-            console.log("Index", index);
-            this.champion0.imageUrl = this.championImages[3]
+            console.log(this.champion0.championName);
+            // var index = this.championImages[3];
+            // console.log("Index", index);
+            // this.champion0.imageUrl = this.championImages[3]
+        }, 2000);
         });
         championModal.present();
 
