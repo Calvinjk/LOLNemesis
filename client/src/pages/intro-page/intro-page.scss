@@ -1,9 +1,13 @@
 .intro-page{
-    background-image: url("/trundle.jpg");
+    background-image: url("/ScarySona.jpg");
     background-size: cover;
     .butn{
         position:absolute;
-        top: 350px;
+        top: 425px;
         left:110px;
+    }
+    ion-item{
+        opacity: .7;
+        top: 325px;
     }
 }
