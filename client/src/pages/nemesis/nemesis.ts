@@ -87,20 +87,11 @@ export class NemesisPage implements OnInit {
         this.counterInfo = this.stats[1];
         this.synergyInfo = this.stats[2];
 
-        //Dynamically get opposing champions
-        let enemy1 = {name: "Zed", status: "Counter"};
-        let ally1 = {name:"Alistar", status: "Synergy"};
-        
-        var counters = this.getChampionArray(enemy1.name, this.counterInfo, enemy1.status);
-        var synergies = this.getChampionArray(ally1.name, this.synergyInfo, ally1.status);
-        //console.log("counter", counters.counters, "synergy", synergies.complements);
-        //console.log("userInfo", this.userInfo);
-
-        var optionsArray = this.combineArrays(counters.counters, "Counter", synergies.complements, "Synergy", "Union");
-        //console.log("optionsArray", optionsArray);
-
-        var suggestionsArray = this.combineArrays(optionsArray, "Option", this.userInfo, "Info", "Intersect");
-        console.log("suggestionsArray", suggestionsArray);
+        var teamComps = [
+            {name: "Zed", status: "Counter"},
+            {name: "Alistar", status: "Synergy"}
+        ]
+        console.log(this.createSuggestionArray(teamComps));
     }
 
     goToModal1() {
@@ -324,7 +315,45 @@ export class NemesisPage implements OnInit {
     }
 
     createSuggestionArray(champions){
+        // Load up the array of arrays.  These hold counter and synergy information
+        var arrays: any = []; 
+        for (var champion in champions){
+            if (champions[champion].status == "Counter"){
+                arrays.push(this.getChampionArray(champions[champion].name, this.counterInfo, "Counter"));
+            }
+            if (champions[champion].status == "Synergy"){
+                arrays.push(this.getChampionArray(champions[champion].name, this.synergyInfo, "Synergy"));
+            }
+        }
 
+        // Create the master optionsArray 
+        var optionsArray = arrays[0];
+        for (var i = 1; i < arrays.length; ++i){
+            if (i == 1){
+                if (champions[0].status == "Counter" && champions[1].status == "Counter"){
+                    optionsArray = this.combineArrays(arrays[0].counters, champions[0].status, arrays[i].counters, champions[i].status, "Union");
+                } else if (champions[0].status == "Counter" && champions[i].status == "Synergy"){
+                    optionsArray = this.combineArrays(arrays[0].counters, champions[0].status, arrays[i].complements, champions[i].status, "Union");
+                } else if (champions[0].status == "Synergy" && champions[i].status == "Counter"){
+                    optionsArray = this.combineArrays(arrays[0].complemments, champions[0].status, arrays[i].counters, champions[i].status, "Union");
+                } else if (champions[0].status == "Synergy" && champions[i].status == "Synergy"){
+                    optionsArray = this.combineArrays(arrays[0].complements, champions[0].status, arrays[i].complements, champions[i].status, "Union");
+                }
+            } else {
+                if (champions[i].status == "Counter"){
+                    optionsArray = this.combineArrays(arrays[i].counters, champions[i].status, optionsArray, "Option", "Union");
+                } else if (champions[i].status == "Synergy"){
+                    optionsArray = this.combineArrays(arrays[i].complements, champions[i].status, optionsArray, "Option", "Union");
+                }
+            }
+        }
+
+        // Create the master suggestionArray
+        var suggestionsArray = this.combineArrays(optionsArray, "Option", this.userInfo, "Info", "Intersect");
+        
+        //Sort
+        
+        return suggestionsArray;
     }
 }
 
