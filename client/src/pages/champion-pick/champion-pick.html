@@ -16,7 +16,7 @@
     <ion-grid>
     <ion-row wrap>
       <ion-col width-33 *ngFor="let champion of champions">
-        <img src="http://ddragon.leagueoflegends.com/cdn/6.20.1/img/champion/Aatrox.png" width="110" height="110" class="cover">
+        <img [src]="champion.imageUrl" width="110" height="110" class="cover">
       </ion-col>
     </ion-row>
   </ion-grid>
