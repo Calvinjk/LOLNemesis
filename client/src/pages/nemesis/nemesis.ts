@@ -323,6 +323,13 @@ export class NemesisPage implements OnInit {
     }
 
     createSuggestionArray(champions){
+        // First thing's first, delete the empty positions
+        for(var index = 0; index < champions.length; ++index){
+            if (champions[index].name == ""){
+                champions.splice(index--, 1);
+            }
+        }
+
         // Load up the array of arrays.  These hold counter and synergy information
         var arrays: any = []; 
         for (var champion in champions){
