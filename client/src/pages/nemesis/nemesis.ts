@@ -300,15 +300,28 @@ export class NemesisPage implements OnInit {
     }
 
     goToModalMid() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 0});
-        championModal.onDidDismiss(data => {
-            for (var i = 0; i < data.length; i++){
-                if (this.champion0.championName == data[i].championName){
-                    this.champion0.imageUrl = data[i].imageUrl;
+        this.http.get("/championImages.json").subscribe(data => {
+            let arr = JSON.parse(data.text());
+            console.log(arr);
+            arr.sort();
+            arr.sort(function (a, b) {
+                if (a.championName > b.championName) {
+                    return 1;
+                }
+                if (a.championName < b.championName) {
+                    return -1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+            console.log(arr);
+            this.champions = arr;
+            for (var i = 0; i < this.champions.length; i++){
+                if (this.champion0.championName == this.champions[i].championName){
+                    this.champion0.imageUrl = this.champions[i].imageUrl;
                 }
             }
         });
-        championModal.present();
     }
 
     getChampionArray(championName, largeArray, type){
