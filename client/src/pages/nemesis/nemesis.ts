@@ -42,47 +42,47 @@ export class NemesisPage implements OnInit {
         public http: Http,
         public modalCtrl: ModalController) {
             this.champion0 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion1 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion2 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion3 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion4 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion6 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion7 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion8 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion9 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion0 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
             this.champion10 = {
-                imageUrl: "/images.jpg",
+                imageUrl: "../assets/img/images.jpg",
                 championName: ""
             };
 
@@ -300,7 +300,7 @@ export class NemesisPage implements OnInit {
     }
 
     goToModalMid() {
-        this.http.get("/championImages.json").subscribe(data => {
+        this.http.get("../assets/img/championImages.json").subscribe(data => {
             let arr = JSON.parse(data.text());
             console.log(arr);
             arr.sort();

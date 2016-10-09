@@ -14,7 +14,7 @@ export class ChampionPicksPage implements OnInit {
     }
     ngOnInit() {
         this.id = this.params.get('id');
-        this.http.get("/championImages.json").subscribe(data => {
+        this.http.get("../assets/img/championImages.json").subscribe(data => {
             let arr = JSON.parse(data.text());
             console.log(arr);
             arr.sort();

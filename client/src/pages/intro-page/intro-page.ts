@@ -30,7 +30,7 @@ export class IntroPage implements OnInit {
   ngOnInit() {
 
     //gets list of counters with names and percentages
-    this.http.get("/championCounterInfo.json").subscribe(data => {
+    this.http.get("../assets/img/championCounterInfo.json").subscribe(data => {
       let arr = JSON.parse(data.text());
       for (let i = 0; i < arr.length; i++){
         this.counterInfo[i] = {
@@ -51,7 +51,7 @@ export class IntroPage implements OnInit {
     });
 
     //gets list of champions that complement champ with names and percentages
-    this.http.get("/championSynergyInfo.json").subscribe(data => {
+    this.http.get("../assets/img/championSynergyInfo.json").subscribe(data => {
       let arr = JSON.parse(data.text());
       for (let i = 0; i < arr.length; i++){
         this.synergyInfo[i] = {
