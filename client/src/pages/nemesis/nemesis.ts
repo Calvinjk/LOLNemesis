@@ -88,16 +88,16 @@ export class NemesisPage implements OnInit {
         this.synergyInfo = this.stats[2];
 
         var teamComps = [
-            {name: "Zed", status: "Counter"},
-            {name: "Cho'Gath", status: "Counter"},
-            {name: "Vayne", status: "Counter"},
-            {name: "Janna", status: "Counter"},
-            {name: "Sejuani", status: "Counter"},
-            {name: "Kalista", status: "Synergy"},
-            {name: "Yasuo", status: "Synergy"},
-            {name: "Alistar", status: "Synergy"},
-            {name: "Malphite", status: "Synergy"},
-            {name: "Alistar", status: "Synergy"}
+            {name: "Blitzcrank", status: "Counter"},
+            {name: "", status: "Counter"},
+            {name: "", status: "Counter"},
+            {name: "", status: "Counter"},
+            {name: "", status: "Counter"},
+            {name: "", status: "Synergy"},
+            {name: "", status: "Synergy"},
+            {name: "", status: "Synergy"},
+            {name: "", status: "Synergy"},
+            {name: "", status: "Synergy"}
         ]
         console.log("SUGGESTION:", this.createSuggestionArray(teamComps));
     }
@@ -378,6 +378,7 @@ export class NemesisPage implements OnInit {
         // Personalized information
         for (var champion in suggestionsArray){
             var winrate = suggestionsArray[champion].stats.totalSessionsWon / suggestionsArray[champion].stats.totalSessionsPlayed;
+            suggestionsArray[champion].score += Math.pow(suggestionsArray[champion].stats.totalSessionsPlayed, 1);
             suggestionsArray[champion].score *= winrate;
         }
 
