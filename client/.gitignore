@@ -29,6 +29,7 @@ plugins/ios.json
 www/assets
 www/build
 www/*.jpg
+www/*.json
 $RECYCLE.BIN/
 
 .DS_Store
