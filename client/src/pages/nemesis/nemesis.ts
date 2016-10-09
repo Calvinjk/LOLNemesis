@@ -481,6 +481,7 @@ export class NemesisPage implements OnInit {
                 arrays.push(this.getChampionArray(champions[champion].name, this.synergyInfo, "Synergy"));
             }
         }
+        console.log("ARRAY", arrays);
 
         // Create the master optionsArray 
         var optionsArray = [];
@@ -495,10 +496,10 @@ export class NemesisPage implements OnInit {
                     optionsArray.push(obj);
                 }
             } else if (champions[0].status == "Synergy"){
-                for (let elem in arrays[0].counters){
+                for (let elem in arrays[0].complements){
                     var obj = {
-                        name: arrays[0].counters[elem].complement, 
-                        score: arrays[0].counters[elem].percent
+                        name: arrays[0].complements[elem].complement, 
+                        score: arrays[0].complements[elem].percent
                     }
                     optionsArray.push(obj);
                 }
@@ -506,7 +507,7 @@ export class NemesisPage implements OnInit {
         } else {
             optionsArray = arrays[0];
         }
-
+        console.log("OPTIONS", optionsArray);
 
         if (arrays.length > 1){
             for (var i = 1; i < arrays.length; ++i){
