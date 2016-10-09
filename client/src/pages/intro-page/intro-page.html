@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-navbar>
-      <ion-title>LOL Nemesis</ion-title>
+  <ion-navbar color="primary">
+      <ion-title style="text-align:center"><h4 color="secondary">Enter Your Summoner Name</h4></ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="intro-page">
 
-  <h3>Enter Your Summoner Name</h3>
+  <!--<h3 color="secondary">Enter Your Summoner Name</h3>-->
 
   <ion-item>
     <ion-label floating>Summoner Name</ion-label>
@@ -15,6 +15,6 @@
   </ion-item>
 
 
-  <button ion-button color="danger" (click)="pushNemesisPage(summoner.name)">Nemesis Draft</button>
+  <button class="butn" ion-button color="danger" (click)="pushNemesisPage(summoner.name)">Nemesis Draft</button>
 
 </ion-content>
