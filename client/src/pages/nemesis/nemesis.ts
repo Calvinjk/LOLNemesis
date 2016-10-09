@@ -8,6 +8,9 @@ import 'rxjs/add/operator/map';
 })
 export class NemesisPage implements OnInit {
     public stats: any[];
+    public userInfo: any;
+    public counterInfo: any;
+    public synergyInfo: any;
     public champions: any[];
     constructor(public nav: NavController,
         public params: NavParams,
@@ -16,12 +19,15 @@ export class NemesisPage implements OnInit {
     }
 
     ngOnInit() {
-        
+        this.stats = this.params.get('userInfo');
+        this.userInfo = this.stats[0];
+        this.counterInfo = this.stats[1];
+        this.synergyInfo = this.stats[2];
 
     }
 
     pushNemesisPage() {
-        
+        console.log(this.stats);
 
     };
 
