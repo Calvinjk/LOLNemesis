@@ -21,6 +21,7 @@ export class IntroPage implements OnInit {
   public counterArr: any[];
   public synergyArr: any[];
   public params: any[];
+  public statsArray = [];
   constructor(public nav: NavController, public http: Http) {
 
   }
@@ -86,21 +87,14 @@ export class IntroPage implements OnInit {
       let arr = data.data;
       this.champions = Object.keys(arr).map(function(key) {return arr[key];});
       console.log(this.champions);
-      localStorage.setItem("championInfo", this.champions);
     });
 
     this.http.get("https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + localStorage.getItem('id') + "/ranked?season=SEASON2016&api_key=RGAPI-ce8f3488-0df4-4d9c-b42b-9c64b391b722").map(res => res.json()).subscribe(data => {
       this.stats = data;
-      this.champions = localStorage.getItem("championInfo");
-      console.log("LOGIN PAGE INFO", this.stats, this.champions);
-      console.log(this.champions[2]);
-
-      //Change stats to store name instead of id#
-      for (var champion in this.stats){
-
-      }
+      setTimeout(() => {
+        console.log("LOGIN PAGE INFO", this.stats, this.champions);
       
-      /* OLD CODE
+      
       for (var i=0; i < this.stats.champions.length; i++){
         for (var j = 0; j < this.champions.length; j++){
                   if(this.stats.champions[i].id == this.champions[j].id ){
@@ -109,13 +103,16 @@ export class IntroPage implements OnInit {
                   }
         }
       }
-      */
 
-      let statsArray = [];
+      console.log("Stats: ", this.stats);
+      
+
+      
       for (let item in this.stats){
-        statsArray.push(this.stats[item]);
+        this.statsArray.push(this.stats[item]);
       }
-      statsArray = statsArray[2]; // For some reason [0] and [1] were nonsense numbers.  [2] was the array
+      this.statsArray = this.statsArray[2]; // For some reason [0] and [1] were nonsense numbers.  [2] was the array
+      
 
       let counterArray = []
       for (let item in this.counterInfo){
@@ -128,11 +125,12 @@ export class IntroPage implements OnInit {
       }
 
       this.params = [
-        statsArray,
+        this.statsArray,
         counterArray,
         synergyArray
       ]
       this.nav.push(NemesisPage, { 'userInfo': this.params })
+      }, 2000);
     });
 
   };
