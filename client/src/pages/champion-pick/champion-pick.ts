@@ -7,12 +7,13 @@ import { Http } from '@angular/http';
 })
 export class ChampionPicksPage implements OnInit {
     public champions: any;
+    public id: any;
     constructor(public viewCtrl: ViewController,
         public params: NavParams,
         public http: Http) {
     }
     ngOnInit() {
-        // var arr = this.params.get('id');
+        this.id = this.params.get('id');
         this.http.get("/championImages.json").subscribe(data => {
             let arr = JSON.parse(data.text());
             console.log(arr);
@@ -36,6 +37,7 @@ export class ChampionPicksPage implements OnInit {
         this.viewCtrl.dismiss();
     }
     insertChampion(champion) {
-        this.viewCtrl.dismiss();
+        champion.id = this.id;
+        this.viewCtrl.dismiss(champion);
     }
 }

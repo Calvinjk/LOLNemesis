@@ -16,7 +16,7 @@
     <ion-grid>
     <ion-row wrap>
       <ion-col width-33 *ngFor="let champion of champions">
-        <img [src]="champion.imageUrl" width="110" height="110" class="cover">
+        <img [src]="champion.imageUrl" (click)="insertChampion(champion)" width="110" height="110" class="cover">
       </ion-col>
     </ion-row>
   </ion-grid>

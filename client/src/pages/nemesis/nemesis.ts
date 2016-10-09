@@ -14,10 +14,66 @@ export class NemesisPage implements OnInit {
     public synergyInfo: any;
     public champions: any[];
     public championImages: any;
+    public champion0: any;
+    public champion1: any;
+    public champion2: any;
+    public champion3: any;
+    public champion4: any;
+    public champion5: any;
+    public champion6: any;
+    public champion7: any;
+    public champion8: any;
+    public champion9: any;
+    public champion10: any;
     constructor(public nav: NavController,
         public params: NavParams,
         public http: Http,
         public modalCtrl: ModalController) {
+            this.champion0 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion1 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion2 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion3 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion4 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion6 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion7 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion8 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion9 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion0 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+            this.champion10 = {
+                imageUrl: "/images.jpg",
+                championName: ""
+            };
+
 
     }
 
@@ -47,60 +103,83 @@ export class NemesisPage implements OnInit {
     }
 
     goToModal1() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 1});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 1});
+        championModal.onDidDismiss(data => {
+            this.champion1 = data;
+        });
         championModal.present();
 
     };
 
     goToModal2() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 2});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 2});
+        championModal.onDidDismiss(data => {
+            this.champion2 = data;
+        });
         championModal.present();
     }
     goToModal3() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 3});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 3});
+        championModal.onDidDismiss(data => {
+            this.champion3 = data;
+        });
         championModal.present();
 
     };
 
     goToModal4() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 4});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 4});
+        championModal.onDidDismiss(data => {
+            this.champion4 = data;
+        });
         championModal.present();
     }
 
-    goToModal5() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 5});
-        championModal.present();
-
-    };
-
     goToModal6() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 6});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 6});
+        championModal.onDidDismiss(data => {
+            this.champion6 = data;
+        });
         championModal.present();
     }
     goToModal7() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 7});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 7});
+        championModal.onDidDismiss(data => {
+            this.champion7 = data;
+        });
         championModal.present();
 
     };
 
     goToModal8() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 8});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 8});
+        championModal.onDidDismiss(data => {
+            this.champion8 = data;;
+        });
         championModal.present();
     }
 
     goToModal9() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 9});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 9});
+        championModal.onDidDismiss(data => {
+            this.champion9 = data;
+        });
         championModal.present();
     }
     
     goToModal10() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {id: 10});
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 10});
+        championModal.onDidDismiss(data => {
+            this.champion10 = data;
+        });
         championModal.present();
     }
 
     goToModalMid() {
-        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': this.championImages});
-        console.log(this.championImages);
+        let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 0});
+        championModal.onDidDismiss(data => {
+            this.champion0 = data;
+        });
         championModal.present();
     }
 
