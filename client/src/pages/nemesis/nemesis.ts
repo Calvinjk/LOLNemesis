@@ -412,7 +412,31 @@ export class NemesisPage implements OnInit {
         }
 
         // Create the master optionsArray 
-        var optionsArray = arrays[0];
+        var optionsArray = [];
+
+        if (arrays.length == 1){ // Fix if one thing in array
+            if (champions[0].status == "Counter"){ 
+                for (let elem in arrays[0].counters){
+                    var obj = {
+                        name: arrays[0].counters[elem].counter, 
+                        score: arrays[0].counters[elem].percent
+                    }
+                    optionsArray.push(obj);
+                }
+            } else if (champions[0].status == "Synergy"){
+                for (let elem in arrays[0].counters){
+                    var obj = {
+                        name: arrays[0].counters[elem].complement, 
+                        score: arrays[0].counters[elem].percent
+                    }
+                    optionsArray.push(obj);
+                }
+            } 
+        } else {
+            optionsArray = arrays[0];
+        }
+
+
         if (arrays.length > 1){
             for (var i = 1; i < arrays.length; ++i){
                 if (i == 1){
