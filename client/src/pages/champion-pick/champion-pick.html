@@ -1,0 +1,114 @@
+<ion-header>
+    <ion-navbar primary>
+        <ion-buttons start>
+            <button (click)="dismiss()">
+            <span showWhen="ios">Cancel</span>
+            <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+        </button>
+        </ion-buttons>
+        <ion-title>
+            Pick a Champion
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content class="champion-pick">
+    
+    <ion-grid>
+    <ion-row wrap>
+      <ion-col width-33 *ngFor="let champion of champions">
+        <img src="http://ddragon.leagueoflegends.com/cdn/6.20.1/img/champion/Aatrox.png" width="110" height="110" class="cover">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+    <!--<form>
+        <ion-list>
+            <ion-item>
+                <ion-label fixed>Time</ion-label>
+                <ion-datetime displayFormat="h:mm a" placeholder="alarm.time" [(ngModel)]="alarm.time">
+                </ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label> Active</ion-label>
+                <ion-toggle item-right [(ngModel)]="alarm.active"></ion-toggle>
+            </ion-item>
+            <ion-item>
+                <ion-label> Repeat</ion-label>
+                <ion-toggle item-right [(ngModel)]="alarm.repeat"></ion-toggle>
+            </ion-item>
+            <ion-item [hidden]="!alarm.repeat">
+                <ion-label>Days</ion-label>
+                <ion-select [(ngModel)]="alarm.days" multiple="true" cancelText="Cancel" okText="Ok">
+                    <ion-option value="monday">Monday</ion-option>
+                    <ion-option value="tuesday">Tuesday</ion-option>
+                    <ion-option value="wednesday">Wednesday</ion-option>
+                    <ion-option value="thursday">Thursday</ion-option>
+                    <ion-option value="friday">Friday</ion-option>
+                    <ion-option value="saturday">Saturday</ion-option>
+                    <ion-option value="sunday">Sunday</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Difficulty</ion-label>
+                <ion-select [(ngModel)]="alarm.difficulty">
+                    <ion-option value="beginner">Beginner</ion-option>
+                    <ion-option value="intermediate">Intermediate</ion-option>
+                    <ion-option value="expert">Expert</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Routine Length</ion-label>
+                <ion-select [(ngModel)]="alarm.duration">
+                    <ion-option value="5">5 Minutes</ion-option>
+                    <ion-option value="10">10 Minutes</ion-option>
+                    <ion-option value="15">15 Minutes</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Video Music</ion-label>
+                <ion-select [(ngModel)]="alarm.music">
+                    <ion-option value="none">None</ion-option>
+                    <ion-option value="beach">By the Sea</ion-option>
+                    <ion-option value="electronic">Electric Sunrise</ion-option>
+                    <ion-option value="guitar">Contemplative Morning</ion-option>
+                    <ion-option value="michigan">Michigan Woods</ion-option>
+                    <ion-option value="rainforest">Rainforest</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Alarm Tone</ion-label>
+                <ion-select [(ngModel)]="alarm.tone">
+                    <ion-option value="amaryllis">Amaryllis</ion-option>
+                    <ion-option value="basic">Basic Alarm</ion-option>
+                    <ion-option value="bell">Bells</ion-option>
+                    <ion-option value="chime">Chimes</ion-option>
+                    <ion-option value="cyber">Cyber</ion-option>
+                    <ion-option value="early-sunrise">Early Sunrise</ion-option>
+                    <ion-option value="funk">Funk</ion-option>
+                    <ion-option value="harp">Harp</ion-option>
+                    <ion-option value="light-jazz">Light Jazz</ion-option>
+                    <ion-option value="morning-dew">Morning Dew</ion-option>
+                    <ion-option value="orchid">Orchid</ion-option>
+                    <ion-option value="rock">Rock</ion-option>
+                    <ion-option value="star-gazing">Star Gazing</ion-option>
+                    <ion-option value="wind-chimes">Wind Chimes</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Maximum Snoozes</ion-label>
+                <ion-select [(ngModel)]="alarm.snoozeMax">
+                    <ion-option value="1">1</ion-option>
+                    <ion-option value="2">2</ion-option>
+                    <ion-option value="3">3</ion-option>
+                    <ion-option value="4">4</ion-option>
+                    <ion-option value="5">5</ion-option>
+                    <ion-option value="unlimited">Unlimited</ion-option>
+                </ion-select>
+            </ion-item>
+            <div padding>
+                <button block (click)="createAlarm(alarm)">Create</button>
+            </div>
+        </ion-list>
+    </form>-->
+</ion-content>
