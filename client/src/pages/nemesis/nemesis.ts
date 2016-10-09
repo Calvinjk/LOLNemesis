@@ -167,11 +167,19 @@ export class NemesisPage implements OnInit {
     goToModal6() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 6});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
             this.champion6 = data;
             this.teamComp[0] = {
                 name: this.champion6.championName,
                 status: "Counter"
             };
+            console.log("teamcomp", this.teamComp);
+            console.log("return", this.createSuggestionArray(this.teamComp));
+            var arr = this.createSuggestionArray(this.teamComp);
+            console.log("arr", arr[0]);
+            this.champion0.championName = name;
+            console.log(this.champion0.championName);
+            },2000);
         });
         championModal.present();
     }
@@ -203,11 +211,13 @@ export class NemesisPage implements OnInit {
     goToModal9() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, {'id': 9});
         championModal.onDidDismiss(data => {
+            setTimeout(() => {
             this.champion9 = data;
             this.teamComp[3] = {
                 name: this.champion9.championName,
                 status: "Counter"
             };
+            }, 2000);
         });
         championModal.present();
     }
