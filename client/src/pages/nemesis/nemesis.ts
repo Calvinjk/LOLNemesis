@@ -606,12 +606,8 @@ export class NemesisPage implements OnInit {
         // Note: This makes each enemy and ally have the same weight.
         //      if we want lane matchups to matter more, this needs to be changed.
         for (var champ in optionsArray){
-            console.log(optionsArray[champ].name, optionsArray[champ].score, optionsArray[champ].numInputs);
             optionsArray[champ].score /= optionsArray[champ].numInputs;
-            console.log(optionsArray[champ].score);
         }
-
-        console.log("OPT", optionsArray);
 
         // Create the master suggestionArray
         var suggestionsArray = this.combineArrays(optionsArray, "Option", this.userInfo, "Info", "Intersect");
@@ -627,16 +623,6 @@ export class NemesisPage implements OnInit {
 
         // Determine the score.   Throw it in the big algorithm!!
         this.determineScore(suggestionsArray);
-
-        // Personalized information
-        /*
-        for (var champion in suggestionsArray) {
-            var winrate = suggestionsArray[champion].stats.totalSessionsWon / suggestionsArray[champion].stats.totalSessionsPlayed;
-            suggestionsArray[champion].score += Math.pow(suggestionsArray[champion].stats.totalSessionsPlayed, 1);
-            suggestionsArray[champion].score *= winrate;
-        }
-        */
-
 
         // Sort
         suggestionsArray.sort(function compareScores(a, b) {
@@ -654,15 +640,98 @@ export class NemesisPage implements OnInit {
     }
 
     determineScore(suggestionArray){
+        let minimumWinrate = .30;
+        let maximumGamesPlayed = 500;   // If this is changed, the gamesPlayedPower needs to also be changed so that maximumGamesPlayed ^ gamesPlayedPower = 100
+        let gamesPlayedPower = 2 * (Math.log(2) + Math.log(5)) / (2 * Math.log(2) + 3 * Math.log(5));
+        let maxKDAContribution = 20;    // This number is avgKills + avgAssist per death (max we care about)
+
+
+
+        let returnedArray = [];
         // By this point, the .score section of a champion is ONLY the synergy and counter information
-        for (var champion in suggestionArray){
+        for (let champion in suggestionArray){
             let returnedChampion = {
-                counterSynergyScore: 0
+                counterSynergyScore: 0, // max 100
+                experienceScore: 0,     // max 100
+                firstBloodScore: 0,     // max 100
+                KDAScore: 0             // max 100
             }
 
             // Pull the Counter + Synergy number.  Out of 100.
             returnedChampion.counterSynergyScore = suggestionArray[champion].score;
+
+            // Personalized information
+            /* Stats available:             * means used in algorithm
+                maxChampionsKilled
+                maxNumDeaths
+                mostChampionKillsPerSession
+                mostSpellsCast
+                totalAssists                *
+                totalChampionKills          *
+                totalDamageDealt
+                totalDamageTaken
+                totalDeathsPerSession       *
+                totalDoubleKills
+                totalFirstBlood             *
+                totalGoldEarned
+                totalMagicDamageDealt
+                totalMinionKills
+                totalPentaKills
+                totalPhysicalDamageDealt
+                totalQuadraKills
+                totalSessionsLost
+                totalSessionsPlayed         *
+                totalSessionsWon            *
+                totalTripleKills
+                totalTurretsKilled
+                totalUnrealKills
+            */
+            let winrate = suggestionArray[champion].stats.totalSessionsWon / suggestionArray[champion].stats.totalSessionsPlayed;
+
+            // Fix winrate so it is not below a certain threshold
+            if (winrate < minimumWinrate) { winrate = minimumWinrate; }
+
+            // Pull games played and fix if over a certain threshold
+            // This portion accounts for gamesPlayed and winrate, stored as a number max 100
+            let gamesPlayed = suggestionArray[champion].stats.totalSessionsPlayed;
+            if (gamesPlayed > maximumGamesPlayed) { gamesPlayed = maximumGamesPlayed; }
+
+            gamesPlayed = Math.pow(gamesPlayed, gamesPlayedPower); //Now gamesPlayed is MAX 100
+            gamesPlayed *= winrate;  
+
+            returnedChampion.experienceScore = gamesPlayed;
+
+            // First blood contribution
+            // On average, a player should get first blood 10% of this time assuming everyone at same skill level
+            let firstBloodContribution = suggestionArray[champion].stats.totalFirstBlood / suggestionArray[champion].stats.totalSessionsPlayed * 100;
+            console.log(firstBloodContribution);
+            // Attempt to normalize this
+            if (firstBloodContribution < .005) { firstBloodContribution = 5 ;}
+            else if (firstBloodContribution < .01) { firstBloodContribution = 10 ;}
+            else if (firstBloodContribution < .02) { firstBloodContribution = 20 ;}
+            else if (firstBloodContribution < .035) { firstBloodContribution = 30 ;}
+            else if (firstBloodContribution < .055) { firstBloodContribution = 40 ;}
+            else if (firstBloodContribution < .075) { firstBloodContribution = 50 ;}
+            else if (firstBloodContribution < .09) { firstBloodContribution = 60 ;}
+            else if (firstBloodContribution < .1) { firstBloodContribution = 70 ;}
+            else if (firstBloodContribution < .2) { firstBloodContribution = 80 ;}
+            else if (firstBloodContribution < .5) { firstBloodContribution = 90 ;}
+            else if (firstBloodContribution < 1) { firstBloodContribution = 100 ;}
             
+            returnedChampion.firstBloodScore = firstBloodContribution;
+
+            // KDA contribution
+            let averageKills = suggestionArray[champion].stats.totalChampionKills / suggestionArray[champion].stats.totalSessionsPlayed;
+            let averageDeaths = suggestionArray[champion].stats.totalDeathsPerSession / suggestionArray[champion].stats.totalSessionsPlayed;
+            let averageAssists = suggestionArray[champion].stats.totalAssists / suggestionArray[champion].stats.totalSessionsPlayed;
+    
+            let averageContributionPerDeath = (averageKills + averageAssists) / averageDeaths;
+
+            if (averageContributionPerDeath > maxKDAContribution) { averageContributionPerDeath = maxKDAContribution; }
+
+            returnedChampion.KDAScore = averageContributionPerDeath / maxKDAContribution;
+
+            console.log(suggestionArray[champion].name, returnedChampion);
         }
 
     }
