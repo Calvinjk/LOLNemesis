@@ -99,27 +99,13 @@ export class NemesisPage implements OnInit {
         this.userInfo = this.stats[0];
         this.counterInfo = this.stats[1];
         this.synergyInfo = this.stats[2];
-
-        // var teamComps = [
-        //     {name: "Blitzcrank", status: "Counter"},
-        //     {name: "Cho'Gath", status: "Counter"},
-        //     {name: "Vayne", status: "Counter"},
-        //     {name: "Janna", status: "Counter"},
-        //     {name: "Sejuani", status: "Counter"},
-        //     {name: "Kalista", status: "Synergy"},
-        //     {name: "Yasuo", status: "Synergy"},
-        //     {name: "Alistar", status: "Synergy"},
-        //     {name: "Malphite", status: "Synergy"},
-        //     {name: "Alistar", status: "Synergy"}
-        // ]
-        // console.log("SUGGESTION:", this.createSuggestionArray(teamComps));
     }
 
     goToModal1() {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 1 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion1 = data;
                 this.teamComp[5] = {
                     name: this.champion1.championName,
@@ -134,7 +120,7 @@ export class NemesisPage implements OnInit {
                         })
                     }
                 }
-                console.log("teamcomp", this.teamComp);
+                //console.log("teamcomp", this.teamComp);
                 // console.log("return", this.createSuggestionArray(this.teamComp));
                 var arr = this.createSuggestionArray(passThisIn);
                 console.log("arr", arr[0]);
@@ -164,7 +150,7 @@ export class NemesisPage implements OnInit {
                         })
                     }
                 }
-                console.log("teamcomp", this.teamComp);
+                //console.log("teamcomp", this.teamComp);
                 // console.log("return", this.createSuggestionArray(this.teamComp));
                 var arr = this.createSuggestionArray(passThisIn);
                 console.log("arr", arr[0]);
@@ -177,7 +163,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 3 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion3 = data;
                 this.teamComp[7] = {
                     name: this.champion3.championName,
@@ -207,7 +193,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 4 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion4 = data;
                 this.teamComp[8] = {
                     name: this.champion4.championName,
@@ -236,7 +222,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 6 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion6 = data;
                 this.teamComp[0] = {
                     name: this.champion6.championName,
@@ -264,7 +250,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 7 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion7 = data;
                 this.teamComp[1] = {
                     name: this.champion7.championName,
@@ -294,7 +280,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 8 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion8 = data;
                 this.teamComp[2] = {
                     name: this.champion8.championName,
@@ -323,7 +309,7 @@ export class NemesisPage implements OnInit {
         let championModal = this.modalCtrl.create(ChampionPicksPage, { 'id': 9 });
         championModal.onDidDismiss(data => {
             setTimeout(() => {
-                console.log("DATA", data);
+                //console.log("DATA", data);
                 this.champion9 = data;
                 this.teamComp[3] = {
                     name: this.champion9.championName,
@@ -371,10 +357,10 @@ export class NemesisPage implements OnInit {
                 var arr = this.createSuggestionArray(passThisIn);
                 var name = arr[0].name;
                 this.champion0.championName = name;
-                console.log(this.champion0.championName);
+                //console.log(this.champion0.championName);
                 // var index = this.championImages[3]
                 // console.log("Index", index);
-                console.log(this.championImages.find(name));
+                //console.log(this.championImages.find(name));
             }, 1000);
         });
         championModal.present();
@@ -384,7 +370,7 @@ export class NemesisPage implements OnInit {
     goToModalMid() {
         this.http.get("../assets/img/championImages.json").subscribe(data => {
             let arr = JSON.parse(data.text());
-            console.log(arr);
+            //console.log(arr);
             arr.sort();
             arr.sort(function (a, b) {
                 if (a.championName > b.championName) {
@@ -396,7 +382,7 @@ export class NemesisPage implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-            console.log(arr);
+            //console.log(arr);
             this.champions = arr;
             for (var i = 0; i < this.champions.length; i++) {
                 if (this.champion0.championName == this.champions[i].championName) {
@@ -433,22 +419,25 @@ export class NemesisPage implements OnInit {
         if (combineMethod == "Union") {
             var added = [];
             for (var champion in a2) {   // synergyArray
-                //First make a champ with the complement's data and throw it in combinedArray
+                //First make a champ with the first array's data and throw it in combinedArray
                 var Champion;
                 if (a2Type == "Counter") {
                     Champion = {
                         name: a2[champion].counter,
-                        score: parseInt(a2[champion].percent)
+                        score: parseInt(a2[champion].percent),
+                        numInputs: 1
                     }
                 } else if (a2Type == "Synergy") {
                     Champion = {
                         name: a2[champion].complement,
-                        score: parseInt(a2[champion].percent)
+                        score: parseInt(a2[champion].percent),
+                        numInputs: 1
                     }
                 } else if (a2Type == "Option") {
                     Champion = {
                         name: a2[champion].name,
-                        score: parseInt(a2[champion].score)
+                        score: parseInt(a2[champion].score),
+                        numInputs: a2[champion].numInputs
                     }
                 } else {
                     console.log("Invalid type for combineArrays(a2Type).  Allowed values are Counter, Synergy, or Option.");
@@ -459,18 +448,21 @@ export class NemesisPage implements OnInit {
                 if (a1Type == "Counter") {
                     for (var master in a1) {
                         if (a1[master].counter == combinedArray[champion].name) { // If we find a match, update the info and add the the array
+                            ++combinedArray[champion].numInputs;
                             combinedArray[champion].score += parseInt(a1[master].percent);
                         }
                     }
                 } else if (a1Type == "Synergy") {
                     for (var master in a1) {
                         if (a1[master].complement == combinedArray[champion].name) { // If we find a match, update the info and add the the array
+                            ++combinedArray[champion].numInputs;
                             combinedArray[champion].score += parseInt(a1[master].percent);
                         }
                     }
                 } else if (a1Type == "Option") {
                     for (var master in a1) {
                         if (a1[master].name == combinedArray[champion].name) { // If we find a match, update the info and add the the array
+                            ++combinedArray[champion].numInputs;
                             combinedArray[champion].score += a1[master].score;
                         }
                     }
@@ -492,7 +484,8 @@ export class NemesisPage implements OnInit {
                     if (needToAdd) {
                         ChampionToAdd = {
                             name: a1[champion].counter,
-                            score: parseInt(a1[champion].percent)
+                            score: parseInt(a1[champion].percent),
+                            numInputs: 1
                         }
                         combinedArray.push(ChampionToAdd);
                     }
@@ -505,7 +498,8 @@ export class NemesisPage implements OnInit {
                     if (needToAdd) {
                         ChampionToAdd = {
                             name: a1[champion].complement,
-                            score: parseInt(a1[champion].percent)
+                            score: parseInt(a1[champion].percent),
+                            numInputs: 1
                         }
                         combinedArray.push(ChampionToAdd);
                     }
@@ -518,7 +512,8 @@ export class NemesisPage implements OnInit {
                     if (needToAdd) {
                         ChampionToAdd = {
                             name: a1[champion].name,
-                            score: parseInt(a1[champion].score)
+                            score: parseInt(a1[champion].score),
+                            numInputs: a1[champion].numInputs
                         }
                         combinedArray.push(ChampionToAdd);
                     }
@@ -546,14 +541,6 @@ export class NemesisPage implements OnInit {
     }
 
     createSuggestionArray(champions) {
-        // First thing's first, delete the empty positions
-        for (var index = 0; index < champions.length; ++index) {
-            if (champions[index].name == "") {
-                champions.splice(index, 1);
-                index = 0;
-            }
-        }
-
         // Load up the array of arrays.  These hold counter and synergy information
         var arrays: any = [];
         for (var champion in champions) {
@@ -564,7 +551,6 @@ export class NemesisPage implements OnInit {
                 arrays.push(this.getChampionArray(champions[champion].name, this.synergyInfo, "Synergy"));
             }
         }
-        console.log("ARRAY", arrays);
 
         // Create the master optionsArray 
         var optionsArray = [];
@@ -574,7 +560,8 @@ export class NemesisPage implements OnInit {
                 for (let elem in arrays[0].counters) {
                     var obj = {
                         name: arrays[0].counters[elem].counter,
-                        score: arrays[0].counters[elem].percent
+                        score: parseInt(arrays[0].counters[elem].percent),
+                        numInputs: 1
                     }
                     optionsArray.push(obj);
                 }
@@ -582,7 +569,8 @@ export class NemesisPage implements OnInit {
                 for (let elem in arrays[0].complements) {
                     var obj = {
                         name: arrays[0].complements[elem].complement,
-                        score: arrays[0].complements[elem].percent
+                        score: parseInt(arrays[0].complements[elem].percent),
+                        numInputs: 1
                     }
                     optionsArray.push(obj);
                 }
@@ -590,7 +578,7 @@ export class NemesisPage implements OnInit {
         } else {
             optionsArray = arrays[0];
         }
-        console.log("OPTIONS", optionsArray);
+        //console.log("OPTIONS", optionsArray);
 
         if (arrays.length > 1) {
             for (var i = 1; i < arrays.length; ++i) {
@@ -613,11 +601,22 @@ export class NemesisPage implements OnInit {
                 }
             }
         }
+        
+        // Normalize the Synergy and Counter information so it is always out of 100
+        // Note: This makes each enemy and ally have the same weight.
+        //      if we want lane matchups to matter more, this needs to be changed.
+        for (var champ in optionsArray){
+            console.log(optionsArray[champ].name, optionsArray[champ].score, optionsArray[champ].numInputs);
+            optionsArray[champ].score /= optionsArray[champ].numInputs;
+            console.log(optionsArray[champ].score);
+        }
+
+        console.log("OPT", optionsArray);
 
         // Create the master suggestionArray
         var suggestionsArray = this.combineArrays(optionsArray, "Option", this.userInfo, "Info", "Intersect");
 
-        // Delete champions already in game
+        // Delete champions already in game -- TODO FIX THIS
         for (var idex = 0; idex < suggestionsArray.length; ++idex) {
             for (var jdex in champions) {
                 if (suggestionsArray[idex].name == champions[jdex].name) {
@@ -626,12 +625,17 @@ export class NemesisPage implements OnInit {
             }
         }
 
+        // Determine the score.   Throw it in the big algorithm!!
+        this.determineScore(suggestionsArray);
+
         // Personalized information
+        /*
         for (var champion in suggestionsArray) {
             var winrate = suggestionsArray[champion].stats.totalSessionsWon / suggestionsArray[champion].stats.totalSessionsPlayed;
             suggestionsArray[champion].score += Math.pow(suggestionsArray[champion].stats.totalSessionsPlayed, 1);
             suggestionsArray[champion].score *= winrate;
         }
+        */
 
 
         // Sort
@@ -645,7 +649,22 @@ export class NemesisPage implements OnInit {
             return 0;
         })
 
+        console.log("Suggestion Array", suggestionsArray);
         return suggestionsArray;
+    }
+
+    determineScore(suggestionArray){
+        // By this point, the .score section of a champion is ONLY the synergy and counter information
+        for (var champion in suggestionArray){
+            let returnedChampion = {
+                counterSynergyScore: 0
+            }
+
+            // Pull the Counter + Synergy number.  Out of 100.
+            returnedChampion.counterSynergyScore = suggestionArray[champion].score;
+            
+        }
+
     }
 }
 

@@ -16,7 +16,7 @@ export class ChampionPicksPage implements OnInit {
         this.id = this.params.get('id');
         this.http.get("../assets/img/championImages.json").subscribe(data => {
             let arr = JSON.parse(data.text());
-            console.log(arr);
+            //console.log(arr);
             arr.sort();
             arr.sort(function (a, b) {
                 if (a.championName > b.championName) {
@@ -28,7 +28,7 @@ export class ChampionPicksPage implements OnInit {
                 // a must be equal to b
                 return 0;
             });
-            console.log(arr);
+            //console.log(arr);
             this.champions = arr;
         });
         
