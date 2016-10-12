@@ -546,7 +546,7 @@ export class NemesisPage implements OnInit {
         for (var champion in champions) {
             if (champions[champion].status == "Counter") {
                 arrays.push(this.getChampionArray(champions[champion].name, this.counterInfo, "Counter"));
-            }
+        }
             if (champions[champion].status == "Synergy") {
                 arrays.push(this.getChampionArray(champions[champion].name, this.synergyInfo, "Synergy"));
             }
