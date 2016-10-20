@@ -653,7 +653,7 @@ export class NemesisPage implements OnInit {
             let returnedChampion = {
                 counterSynergyScore: 0, // max 100
                 experienceScore: 0,     // max 100
-                firstBloodScore: 0,     // max 100
+                //firstBloodScore: 0,     // max 100 UNCOMMENT IF WE FIGURE OUT WHY ALWAYS ZERO
                 KDAScore: 0             // max 100
             }
 
@@ -672,7 +672,7 @@ export class NemesisPage implements OnInit {
                 totalDamageTaken
                 totalDeathsPerSession       *
                 totalDoubleKills
-                totalFirstBlood             *
+                totalFirstBlood             *Don't think Riot gives this info accurately.  Seems to always be zero (0).
                 totalGoldEarned
                 totalMagicDamageDealt
                 totalMinionKills
@@ -701,7 +701,8 @@ export class NemesisPage implements OnInit {
 
             returnedChampion.experienceScore = gamesPlayed;
 
-            // First blood contribution
+            /*
+            // First blood contribution (UNCOMMENT IF WE FIGURE OUT WHY IT IS ALWAYS ZERO)
             // On average, a player should get first blood 10% of this time assuming everyone at same skill level
             let firstBloodContribution = suggestionArray[champion].stats.totalFirstBlood / suggestionArray[champion].stats.totalSessionsPlayed * 100;
             console.log(firstBloodContribution);
@@ -719,6 +720,7 @@ export class NemesisPage implements OnInit {
             else if (firstBloodContribution < 1) { firstBloodContribution = 100 ;}
             
             returnedChampion.firstBloodScore = firstBloodContribution;
+            */
 
             // KDA contribution
             let averageKills = suggestionArray[champion].stats.totalChampionKills / suggestionArray[champion].stats.totalSessionsPlayed;
@@ -731,9 +733,8 @@ export class NemesisPage implements OnInit {
 
             returnedChampion.KDAScore = averageContributionPerDeath / maxKDAContribution;
 
-            console.log(suggestionArray[champion].name, returnedChampion);
+            console.log(suggestionArray[champion].name, suggestionArray[champion].stats, returnedChampion);
         }
-
     }
 }
 
